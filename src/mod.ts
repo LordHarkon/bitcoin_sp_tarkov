@@ -23,9 +23,10 @@ class Mod implements IPostDBLoadMod {
         fetch("https://api.blockchain.com/v3/exchange/tickers/BTC-USD")
             .then((res) => res.json())
             .then((data) => {
+                const rawPrice = parseInt(data.price_24h) * 0.2;
                 const price =
                     handbookHelper.inRUB(
-                        parseInt(data.price_24h),
+                        parseInt(rawPrice.toString()),
                         paymentHelper.getCurrency("USD")
                     ) ?? bitcoinHandbook.Price;
                 bitcoinHandbook.Price = price;
